@@ -1,5 +1,7 @@
 package com.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,12 +51,13 @@ public class UserController {
 	   * @return mav : returns ModelAndView object
 	   */
 	  @RequestMapping(value = "/login", method = RequestMethod.POST)
-	  public ModelAndView loginProcess(@ModelAttribute("login") Login login) {
+	  public ModelAndView loginProcess(HttpSession session,@ModelAttribute("login") Login login) {
 	    ModelAndView mav = null;
 	    User user = userService.validateUser(login);
 	    if (null != user) {
 		    mav = new ModelAndView("userhome");
 		    String email = login.getEmailId();
+		    session.setAttribute("email", email);
 		    mav.addObject("msg",email);
 		    
 	    } else {

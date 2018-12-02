@@ -3,7 +3,7 @@ package com.model;
 public class BusPassenger {
 
 	private int pid;
-	private int pbid;
+	private int puid;
 	private String dob;
 	private String gender;
 	private String Address;
@@ -20,12 +20,12 @@ public class BusPassenger {
 		this.pid = pid;
 	}
 
-	public int getPbid() {
-		return pbid;
+	public int getPuid() {
+		return puid;
 	}
 
-	public void setPbid(int pbid) {
-		this.pbid = pbid;
+	public void setPuid(int puid) {
+		this.puid = puid;
 	}
 
 	public String getDob() {
@@ -59,6 +59,7 @@ public class BusPassenger {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	
 	
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <%@ page errorPage = "error.jsp" %>
+<%--   <%@ page errorPage = "error.jsp" %> --%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -39,7 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				
 		</ul>
 		<ul class="tp-hd-rgt wow fadeInRight animated" data-wow-delay=".5s"> 
-			<li class="tol">Welcome ${msg.email}
+			<li class="tol">Welcome ${msg}
 			</li>				
 			<li class="sig"><a href="home.jsp">Logout</a>
         </ul>
@@ -72,7 +72,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<nav class="cl-effect-1">
 						<ul class="nav navbar-nav">
 							<li><a href="about.html">About</a></li>
-								<li><a href="faq.html">Faq</a></li>
+								<li><a href="faq.html">FAQ</a></li>
 								<li><a href="terms.html">Terms of Use</a></li>
 								<li><a href="contact.html">Contact Us</a></li>
 								<div class="clearfix"></div>

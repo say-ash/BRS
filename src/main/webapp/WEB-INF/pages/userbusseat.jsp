@@ -1,153 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+
+
+<html lang="en">
+<link href="../css/seatcss.css" rel="stylesheet" type="text/css" media="all" />
 <head>
-<title>Bus Reservation System</title>
-<!-- for-mobile-apps -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="keywords" content="Bus Ticket Reservation Widget Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<!-- //for-mobile-apps -->
-<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
-<link href="css/style1.css" rel="stylesheet" type="text/css" media="all" />
-<script src="js/jquery-1.11.0.min.js"></script>
-<script src="js/jquery.seat-charts.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/seatcss.css">
 </head>
+<style>
+.input {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+</style>
 <body>
-<div class="content">
-	<h1>Bus Ticket Reservation</h1>
-	<div class="main">
-		<h2>Book Your Seat Now?</h2>
-		<div class="wrapper">
-			<div id="seat-map">
-				<div class="front-indicator"><h3>Front</h3></div>
-			</div>
-			<div class="booking-details">
-						<div id="legend"></div>
-						<h3> Selected Seats (<span id="counter">0</span>):</h3>
-						<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
-						
-						Total: <b>$<span id="total">0</span></b>
-						
-						<button class="checkout-button">Pay Now</button>
-						<button class="checkout-button" onclick="window.location.href='userseat';">Cancel</button>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<script>
-				var firstSeatLabel = 1;
-			
-				$(document).ready(function() {
-					var $cart = $('#selected-seats'),
-						$counter = $('#counter'),
-						$total = $('#total'),
-						sc = $('#seat-map').seatCharts({
-						map: [
-							'ff_ff',
-							'ff_ff',
-							'ee_ee',
-							'ee_ee',
-							'ee___',
-							'ee_ee',
-							'ee_ee',
-							'ee_ee',
-							'eeeee',
-						],
-						seats: {
-							f: {
-								price   : 100,
-								classes : 'first-class', //your custom CSS class
-								category: 'First Class'
-							},
-							e: {
-								price   : 40,
-								classes : 'economy-class', //your custom CSS class
-								category: 'Economy Class'
-							}					
-						
-						},
-						naming : {
-							top : false,
-							getLabel : function (character, row, column) {
-								return firstSeatLabel++;
-							},
-						},
-						legend : {
-							node : $('#legend'),
-							items : [
-								[ 'f', 'available',   'First Class' ],
-								[ 'e', 'available',   'Economy Class'],
-								[ 'f', 'unavailable', 'Already Booked']
-							]					
-						},
-						click: function () {
-							if (this.status() == 'available') {
-								//let's create a new <li> which we'll add to the cart items
-								$('<li>'+this.data().category+' : Seat no '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
-									.attr('id', 'cart-item-'+this.settings.id)
-									.data('seatId', this.settings.id)
-									.appendTo($cart);
-								
-								/*
-								 * Lets update the counter and total
-								 *
-								 * .find function will not find the current seat, because it will change its stauts only after return
-								 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-								 */
-								$counter.text(sc.find('selected').length+1);
-								$total.text(recalculateTotal(sc)+this.data().price);
-								
-								return 'selected';
-							} else if (this.status() == 'selected') {
-								//update the counter
-								$counter.text(sc.find('selected').length-1);
-								//and total
-								$total.text(recalculateTotal(sc)-this.data().price);
-							
-								//remove the item from our cart
-								$('#cart-item-'+this.settings.id).remove();
-							
-								//seat has been vacated
-								return 'available';
-							} else if (this.status() == 'unavailable') {
-								//seat has been already booked
-								return 'unavailable';
-							} else {
-								return this.style();
-							}
-						}
-					});
-
-					//this will handle "[cancel]" link clicks
-					$('#selected-seats').on('click', '.cancel-cart-item', function () {
-						//let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-						sc.get($(this).parents('li:first').data('seatId')).click();
-					});
-
-					//let's pretend some seats have already been booked
-					sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
-			
-			});
-
-			function recalculateTotal(sc) {
-				var total = 0;
-			
-				//basically find every selected seat and sum its price
-				sc.find('selected').each(function () {
-					total += this.data().price;
-				});
-				
-				return total;
-			}
-		</script>
+<form action="../bookseat.html" method="Post">
+    <div class="row info">
+        <div class="col-sm-4"><label class="reserved"><input type="checkbox" class="cust-checkbox" disabled><span></span>Reserved Seat </label></div>
+        <div class="col-sm-4"><label class="selected"><input type="checkbox" class="cust-checkbox" disabled><span></span>Selected Seat </label></div>
+        <div class="col-sm-4"><label ><input type="checkbox" class="cust-checkbox" disabled><span></span>Empty Seat </label></div>
+    </div>
+    <div class="seats">
+        <div class="row">
+            <div class="col-sm-4">
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="1">1<span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="2">2<span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="3" >3<span></span></label>    
+            </div>
+            <div class="col-sm-4">
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="4" >4<span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="5">5<span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="6">6<span></span></label>    
+            </div>
+            <div class="col-sm-4">
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="7">7<span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="8">8<span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="9">9<span></span></label>    
+            </div>
+             <div class="col-sm-4">
+                <label><input type="checkbox" class="cust-checkbox" name="seatno" value="10">10<span></span></label>
+              <!--   <label><input type="checkbox" class="cust-checkbox" value="11"><span></span></label>
+                <label><input type="checkbox" class="cust-checkbox" value="12"><span></span></label>    --> 
+            </div>
+        </div>
+   
+    </div>
+     <div style="text-align:center;">
+    <input type="submit" class="input" value="pay now" />
+ <input type="hidden" name="id" value=${bid}>
 	</div>
-	<p class="copy_rights">&copy; 2018 Bus Reservation System. All Rights Reserved</p>
-</div>
-<script src="js/jquery.nicescroll.js"></script>
-<script src="js/scripts.js"></script>
+    
+    </form>    
 </body>
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".reserved input").prop('checked', true);
+            $(".reserved input").prop('disabled', true);
+            $("label").click(function(){
+                if(!$(this).hasClass("reserved")){
+                    if($(this).find("input").is(":checked")){
+                    $(this).addClass("selected");
+                    }else{
+                        console.log("selected");
+                        $(this).removeClass("selected");
+                    }
+                }
+                else{
+                    alert("Already booked");
+                }
+            })
+        });
+    </script>

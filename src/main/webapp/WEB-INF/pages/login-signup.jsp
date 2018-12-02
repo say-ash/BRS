@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <%@ page errorPage = "error.jsp" %>
+   <%@ page errorPage = "error.jsp" %> 
 <html>
 <head>
 <link href="css/bootstrap.css" rel="stylesheet" id="bootstrap-css2">
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery-1.12.0.min.js"></script>
- <%@ page errorPage = "error.jsp" %>
+
 
 
 </head>

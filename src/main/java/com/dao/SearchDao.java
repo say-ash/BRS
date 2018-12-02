@@ -5,19 +5,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
-
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
 import org.springframework.jdbc.core.RowMapper;
 
+import com.controller.SearchController;
 import com.model.BookDetails;
+import com.model.BusPassenger;
 import com.model.BusSearch;
 import com.model.SearchResult;
 
 public class SearchDao implements InterfaceSearchDao{
 
+	UserDao ud;
 	private JdbcTemplate jdbcTemplate;  
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
 	    this.jdbcTemplate = jdbcTemplate;  
@@ -71,17 +73,50 @@ public class SearchDao implements InterfaceSearchDao{
 
 
 
-	public List<BookDetails> bookBus(List list) {
-		return list;
+	public Object bookBus(List<SearchResult> list, BusPassenger bp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	public int getUId(String email) {
+		String q = "select GBU_ID from GROUP9_BUS_USERS where GBU_EMAIL_ID = ?";
+		int uid = jdbcTemplate.queryForObject(q, Integer.class);
+		return uid;
+	}
+
+
+
+	public int add(BusPassenger bp, int bid) {
+		try {
+			String query1 = "select GROUP9_BUS_PASSENGERS_seq.nextval from dual";
+			int query2 = ud.getSeq(query1);
+			String query3 ="insert into GROUP9_BUS_PASSENGERS values("+query2+","+bid+",'"+bp.getDob()+"','"+bp.getGender()+"','"+bp.getAddress()+"','"+bp.getName()+"')";
+			return jdbcTemplate.update(query3);
+		} catch (DataAccessException e) {
+			return 0;
+		} 
+		
 		
 	}
 
 
 
-	public Object bookBus() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+/*	public List<BookDetails> bookBus(List<SearchResult> list,BusPassenger bp) {
+		
+		String q = "\r\n" + 
+				"select gbb.GBB_ID AS \"Transaction ID\", gbp.GBP_NAME, gbp.GBP_GENDER, gbb.GBB_GBD_ID, gbd.GBD_NAME, t1.source, t1.destination, t1.GBS_ARRIVAL_TIME, t1.GBS_DEPARTURE_TIME, t1.fare from GROUP9_BUS_PASSENGERS gbp INNER JOIN GROUP9_BUS_BOOKINGS gbb on gbp.GBP_ID = gbb.GBB_GBP_ID\r\n" + 
+				"INNER JOIN GROUP9_BUS_DETAILS gbd on gbb.GBB_GBD_ID = gbd.GBD_ID INNER JOIN (select b.gbs_gbd_id, a.gbs_stop_name as source, b.gbs_stop_name as destination, a.GBS_ARRIVAL_TIME, b.GBS_DEPARTURE_TIME, abs(a.gbs_price - b.gbs_price) as fare from group9_bus_stops a inner join group9_bus_stops b on a.gbs_gbd_id=b.gbs_gbd_id where a.gbs_stop_name=? and b.gbs_stop_name=?) t1 on\r\n" + 
+				"t1.GBS_GBD_ID = gbd.GBD_ID where gbp.GBP_ID=?	";
+		Object[] inputs = new Object[] {list.get(0).getSource(),list.get(0).getDestination(),bp.get};
+		return jdbcTemplate.query(q,inputs, new RowMapper<SearchResult>(){
+		
+		return list;
+		
+	}*/
+
+
 
 
 }

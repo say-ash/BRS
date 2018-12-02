@@ -1,7 +1,10 @@
 package com.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,10 +49,14 @@ public class MappingController {
 	}	
 	
 	//Mapping of busseat.jsp
-	@RequestMapping("/seat")
-	public ModelAndView redirect4()
+	@RequestMapping("/seat/{id2}")
+	public ModelAndView redirect4(@PathVariable("id2") int id)
 	{
-		return new ModelAndView("userbusseat");
+
+		ModelAndView mv = new ModelAndView("userbusseat");
+		mv.addObject("bid",id);
+		return mv;
+		
 	}	
 	
 	//Mapping of userbusseat.jsp
@@ -58,6 +65,5 @@ public class MappingController {
 	{
 		return new ModelAndView("userhome");
 	}
-	
 	
 }

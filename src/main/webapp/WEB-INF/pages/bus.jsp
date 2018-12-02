@@ -136,14 +136,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<i class="fa fa-clock-o"></i>
 				</div>
 				<div class="bus-txt1">
-					<h4><a href="#">${lists.arrivalTime}</a></h4>
+					<h4>${lists.arrivalTime}</h4>
 					
 				</div>
 				<div class="clearfix"></div>
 			</li>
 			<li class="arriv">
 				<div class="bus-txt2">
-					<h4><a href="#">${lists.departureTime}</a></h4>
+					<h4>${lists.departureTime}</h4>
 					
 				</div>
 			</li>
@@ -160,7 +160,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<li class="fare">
 				<div class="bus-txt4">
 					<h5>Rs. ${lists.price}</h4>
-					<a href="seat" class="view">View Seats</a>
+					<a href="seat.html" class="view">View Seats</a>
 					   
 
 				</div>

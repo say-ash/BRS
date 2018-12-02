@@ -39,7 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</ul>
 		<ul class="tp-hd-rgt wow fadeInRight animated" data-wow-delay=".5s"> 
 			<li class="tol"></li>				
-			<li class="sig"><a href="login-signup.html">Login|Signup</a>
+			<li class="sig"><a href="login-signup.html">Logout</a>
         </ul>
 		<div class="clearfix"></div>
 	</div>
@@ -67,7 +67,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<nav class="cl-effect-1">
 						<ul class="nav navbar-nav">
 							<li><a href="about.jsp">About</a></li>
-								<li><a href="faq.jsp">Faq</a></li>
+								<li><a href="faq.jsp">FAQ</a></li>
 								<li><a href="terms.jsp">Terms of Use</a></li>
 								<li><a href="contact.jsp">Contact Us</a></li>
 								<div class="clearfix"></div>
@@ -160,7 +160,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<li class="fare">
 				<div class="bus-txt4">
 					<h5>Rs. ${lists.price}</h4>
-					<a href="seat" class="view">View Seats</a>
+					<a href="seat/${lists.id2}" class="view">View Seats</a>
 					   
 
 				</div>

@@ -1,6 +1,7 @@
 package com.model;
 
 public class StopsDetails {
+	
 	private int busNumber;
 	private String stopName;
 	private int stopOrder;

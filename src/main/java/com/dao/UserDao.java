@@ -27,7 +27,7 @@ public class UserDao implements InterfaceUserDao {
 		    return jdbcTemplate.update(query);  
 	}
 
-	private int getSeq(String query1) {
+	public int getSeq(String query1) {
 		
 		int res = jdbcTemplate.queryForObject(query1, Integer.class);
 		return res;
