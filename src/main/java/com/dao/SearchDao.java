@@ -19,7 +19,7 @@ import com.model.SearchResult;
 
 public class SearchDao implements InterfaceSearchDao{
 
-	UserDao ud;
+	
 	private JdbcTemplate jdbcTemplate;  
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
 	    this.jdbcTemplate = jdbcTemplate;  
@@ -82,23 +82,28 @@ public class SearchDao implements InterfaceSearchDao{
 
 	public int getUId(String email) {
 		String q = "select GBU_ID from GROUP9_BUS_USERS where GBU_EMAIL_ID = ?";
-		int uid = jdbcTemplate.queryForObject(q, Integer.class);
+		Object[] input = new Object[]{email};
+		int uid = jdbcTemplate.queryForObject(q,input,Integer.class);
 		return uid;
 	}
 
 
 
-	public int add(BusPassenger bp, int bid) {
-		try {
+	public int add(BusPassenger bp, int uid) {
+
 			String query1 = "select GROUP9_BUS_PASSENGERS_seq.nextval from dual";
-			int query2 = ud.getSeq(query1);
-			String query3 ="insert into GROUP9_BUS_PASSENGERS values("+query2+","+bid+",'"+bp.getDob()+"','"+bp.getGender()+"','"+bp.getAddress()+"','"+bp.getName()+"')";
-			return jdbcTemplate.update(query3);
-		} catch (DataAccessException e) {
-			return 0;
-		} 
+			int query2 = getSeq(query1);
+			String query3 ="insert into GROUP9_BUS_PASSENGERS values("+query2+","+uid+",'"+bp.getDob()+"','"+bp.getGender()+"','"+bp.getAddress()+"','"+bp.getName()+"')";
+			
+			return  jdbcTemplate.update(query3);
+	
 		
+	}
+	
+	private int getSeq(String query1) {
 		
+		int res = jdbcTemplate.queryForObject(query1, Integer.class);
+		return res;
 	}
 
 

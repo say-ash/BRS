@@ -54,38 +54,46 @@ public class SearchController {
 	@PostMapping(value= "/bookseat")
 	public ModelAndView bookseat(HttpServletRequest req, HttpSession session /*@ModelAttribute BusPassenger bp*/) {
 		
-		
+		ModelAndView mav = new ModelAndView("addpassenger");
+		System.out.println("in bookseat controller");
 		int bid = Integer.parseInt(req.getParameter("id"));
-		String[] seatno = (String[]) session.getAttribute("seatno");
-		int seatLength = seatno.length;
-		session.setAttribute("bid", bid);
-		session.setAttribute("seatno", seatno);
-		String email = (String) session.getAttribute("email");
-		int uid = searchService.getUId(email);
-		session.setAttribute("uid", uid);
+		System.out.println(bid);
+		String[] seatno = (String[]) req.getParameterValues("seatno");
+		String seatLength = String.valueOf(seatno.length);
+		System.out.println(seatLength);
 		for(String s: seatno) {
 			System.out.println(s);
 		}
+		session.setAttribute("bid", bid);
+		session.setAttribute("length", seatLength);
+		String email = (String) session.getAttribute("email");
+		System.out.println(email);
+		int uid = searchService.getUId(email);
+		System.out.println(uid);
+		session.setAttribute("uid", uid);
 		
-		return new ModelAndView("addpassenger","seatLength",seatLength);
+		mav.addObject("seatLength",seatLength);
+		return mav;
 		
 	}
 	
 	@PostMapping(value= "/add")
 	public ModelAndView addPassenger(@ModelAttribute BusPassenger bp, HttpSession session) {
 		
+
 		ModelAndView mav = new ModelAndView("addpassenger");
-		int bid = (Integer) session.getAttribute("bid");
-		int i = searchService.add(bp,bid);
+		String length = (String) session.getAttribute("length");
+		int l=(Integer.parseInt(length)-1);
+		System.out.println("l:"+l);
+		mav.addObject("length", l);
+		
+		int uid = (Integer) session.getAttribute("uid");
+		System.out.println(uid);
+		int i = searchService.add(bp,uid);
+		System.out.println(i);
+		
 		mav.addObject("successfull","Passenger added succefully");
-		if(i > 0) {
-			
-			return mav;
-			
-		}
-		return null;
-		
-		
+		return mav;
 	}
 	
 	/*@PostMapping(value= "/confirmseat")

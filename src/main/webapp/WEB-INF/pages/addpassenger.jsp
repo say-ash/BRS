@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -42,24 +42,18 @@ input[type=submit]:hover {
 </head>
 <body>
 
-<h3></h3>
 
 
+<form action="add" method="Post">
 
-<c:if test="${not empty successfull}">
-<div  style="font-color:red" >${successfull}</div>
-</c:if>
-
-
-<c:if test="${not empty seatLength}">
-    <c:forEach begin="1" end="${seatLength}" varStatus="loop">
-    Index: ${loop.index}
+<%-- <c:if test="${not empty seatLength}"> --%>
+    <%-- <c:forEach begin="1" end="${seatLength}" varStatus="loop"> --%>
+    Add ${length}
     <br/>
- <c:if test="${not empty successfull}">
+ <%-- <c:if test="${not empty successfull}">
 <div  style="font-color:green" >${successfull}</div>
-</c:if>
-<div class="container">
-  <form action="/add.html" method="post">
+</c:if> --%>
+	<div class="container">  
     <label for="fname">Name</label>
     <input type="text" id="name" name="name" placeholder="Your name..">
 
@@ -76,10 +70,10 @@ input[type=submit]:hover {
     <label for="address">Address</label>
     <textarea id="address" name="address" placeholder="address.." style="height:200px"></textarea>
     <input type="submit" value="Submit">
-  </form>
+  
 </div>
-</c:forEach>
-</c:if>
-
+<%-- </c:forEach>
+</c:if>--%>
+ </form>
 </body>
 </html>
