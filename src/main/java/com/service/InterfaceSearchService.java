@@ -16,4 +16,6 @@ public interface InterfaceSearchService {
 
 	int add(BusPassenger bp, int bid);
 
+	int book(String s, int bid, int uid);
+
 }

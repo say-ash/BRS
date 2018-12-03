@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -46,13 +47,13 @@ input[type=submit]:hover {
 
 <form action="add" method="Post">
 
-<%-- <c:if test="${not empty seatLength}"> --%>
-    <%-- <c:forEach begin="1" end="${seatLength}" varStatus="loop"> --%>
-    Add ${length}
-    <br/>
- <%-- <c:if test="${not empty successfull}">
+    
+ <c:if test="${not empty successfull}">
 <div  style="font-color:green" >${successfull}</div>
-</c:if> --%>
+</c:if> 
+   <c:if test="${length > 0 }">
+    Add ${length} Passenger Details
+    <br/>
 	<div class="container">  
     <label for="fname">Name</label>
     <input type="text" id="name" name="name" placeholder="Your name..">
@@ -70,10 +71,19 @@ input[type=submit]:hover {
     <label for="address">Address</label>
     <textarea id="address" name="address" placeholder="address.." style="height:200px"></textarea>
     <input type="submit" value="Submit">
+    <input type="hidden" name="l" value=${length}>
   
 </div>
-<%-- </c:forEach>
-</c:if>--%>
+</c:if>
  </form>
+<c:if test="${length == 0}">
+All Passengers added successfully!:)
+Confirm your ticket by clicking on below Pay Now button
+<form action="confirmseat" method="post">
+<input type="submit" value="Pay Now">
+</form>
+</c:if>
+
+
 </body>
 </html>

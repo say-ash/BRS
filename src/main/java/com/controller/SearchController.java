@@ -59,58 +59,75 @@ public class SearchController {
 		int bid = Integer.parseInt(req.getParameter("id"));
 		System.out.println(bid);
 		String[] seatno = (String[]) req.getParameterValues("seatno");
+		session.setAttribute("seatno", seatno);
 		String seatLength = String.valueOf(seatno.length);
 		System.out.println(seatLength);
 		for(String s: seatno) {
 			System.out.println(s);
 		}
 		session.setAttribute("bid", bid);
-		session.setAttribute("length", seatLength);
+		/*session.setAttribute("length", seatLength);*/
 		String email = (String) session.getAttribute("email");
 		System.out.println(email);
 		int uid = searchService.getUId(email);
 		System.out.println(uid);
 		session.setAttribute("uid", uid);
-		
-		mav.addObject("seatLength",seatLength);
+		mav.addObject("length",seatLength);
 		return mav;
 		
 	}
 	
 	@PostMapping(value= "/add")
-	public ModelAndView addPassenger(@ModelAttribute BusPassenger bp, HttpSession session) {
-		
-
-		ModelAndView mav = new ModelAndView("addpassenger");
+	public ModelAndView addPassenger(HttpServletRequest req, @ModelAttribute BusPassenger bp, HttpSession session) {
+		/*
 		String length = (String) session.getAttribute("length");
-		int l=(Integer.parseInt(length)-1);
-		System.out.println("l:"+l);
-		mav.addObject("length", l);
+		*/
+		String l1 = req.getParameter("l");
+		System.out.println("Length: "+l1);
+		int l=Integer.parseInt(l1);
 		
+	 
+		do{
+			l = l-1;
+			System.out.println("l:"+l);
+		ModelAndView mav = new ModelAndView("addpassenger");
+		mav.addObject("length", l);		
 		int uid = (Integer) session.getAttribute("uid");
-		System.out.println(uid);
+		System.out.println("UID: "+uid);
 		int i = searchService.add(bp,uid);
-		System.out.println(i);
-		
+		System.out.println("i: "+i);
 		mav.addObject("successfull","Passenger added succefully");
 		return mav;
-	}
+	} while(l>0);
+		
+			}
 	
-	/*@PostMapping(value= "/confirmseat")
-	public ModelAndView confirmseat(HttpServletRequest req, HttpSession session, @ModelAttribute BusPassenger bp) {
+	@PostMapping(value= "/confirmseat")
+	public ModelAndView confirmseat(HttpServletRequest req, HttpSession session) {
+		
+		System.out.println("ji inside g seat");
+		int i = 0;
 		int uid = (Integer) session.getAttribute("uid");
+		System.out.println("uid"+uid);
 		String[] seatno = (String[]) session.getAttribute("seatno");
 		int bid = (Integer) session.getAttribute("bid");
-		bp.setPuid(uid);
+		System.out.println("bid" +bid);
+		/*bp.setPuid(uid);*/
 		
 		for(String s:seatno) {
-			searchService.book(s);
+			System.out.println(s);
+			i = searchService.book(s,bid,uid);
+			System.out.println("iteration"+i);
 		}
-		List<SearchResult> list = (List<SearchResult>) session.getAttribute("bussearch");
-		
+
+		if(i>0) {
+			return new ModelAndView("done");
+		}
+		/*List<SearchResult> list = (List<SearchResult>) session.getAttribute("bussearch");*/
+		else
 		return new ModelAndView("confirmseat");
 		
-	}*/
+	}
 	/*@RequestMapping("/book")
 	public ModelAndView book(HttpSession session, @ModelAttribute BusPassenger bp) {
 		

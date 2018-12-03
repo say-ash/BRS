@@ -38,6 +38,12 @@ public class SearchService implements InterfaceSearchService{
 	
 		
 	}
+
+
+	public int book(String s, int bid, int uid) {
+		return searchDao.book(s,bid,uid);
+	
+	}
 	
 	
 }

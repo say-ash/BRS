@@ -57,7 +57,7 @@
    
     </div>
      <div style="text-align:center;">
-    <input type="submit" class="input" value="pay now" />
+    <input type="submit" class="input" value="Book Now" />
  <input type="hidden" name="id" value=${bid}>
 	</div>
     

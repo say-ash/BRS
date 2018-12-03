@@ -108,6 +108,29 @@ public class SearchDao implements InterfaceSearchDao{
 
 
 
+	public int book(String s, int bid, int uid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+/*	public int book(String s, int bid, int uid) {
+		
+		String query1="select GBP_ID from GROUP9_BUS_PASSENGERS where GBP_GBU_ID= ?";
+		Object[] input = new Object[]{uid};
+		int puid = jdbcTemplate.query(query1, new ResultSetExtractor<List<BusPassenger>>())
+		String query2="select GROUP9_BUS_BOOKINGS_seq.nextval from dual";
+		int seq= getSeq(query2);
+		String query3="insert into GROUP9_BUS_BOOKINGS values("+seq+","+puid+","+bid+",'"+s+"')";
+		Object[] input1 = new Object[]{seq,puid,bid,s};
+		jdbcTemplate.update(query3);
+		return 1;
+		
+	}*/
+
+
+
 /*	public List<BookDetails> bookBus(List<SearchResult> list,BusPassenger bp) {
 		
 		String q = "\r\n" + 
