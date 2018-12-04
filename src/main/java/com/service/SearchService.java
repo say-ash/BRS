@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dao.InterfaceSearchDao;
+import com.model.Booking;
 import com.model.BusPassenger;
 import com.model.BusSearch;
 import com.model.SearchResult;
@@ -22,11 +23,6 @@ public class SearchService implements InterfaceSearchService{
 	}
 
 
-	public Object bookBus(List<SearchResult> list,BusPassenger bp) {
-		return searchDao.bookBus(list,bp);
-	}
-
-
 	public int getUId(String email) {
 		
 		return searchDao.getUId(email);
@@ -40,10 +36,22 @@ public class SearchService implements InterfaceSearchService{
 	}
 
 
-	public int book(String s, int bid, int uid) {
-		return searchDao.book(s,bid,uid);
-	
+	public List<Integer> getPId(int uid) {
+		return searchDao.getPId(uid);
 	}
+
+
+	public int insertBookings(Booking booking) {
+		return searchDao.insertBookings(booking);
+	}
+
+
+	public List<Integer> getSeatNO(int id) {
+		return searchDao.getSeatNO(id);
+	}
+
+
+
 	
 	
 }

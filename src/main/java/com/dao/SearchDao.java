@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.controller.SearchController;
 import com.model.BookDetails;
+import com.model.Booking;
 import com.model.BusPassenger;
 import com.model.BusSearch;
 import com.model.SearchResult;
@@ -59,24 +59,16 @@ public class SearchDao implements InterfaceSearchDao{
                 sr.setPrice(rs.getInt(7));
                 sr.setId2(rs.getInt(8));
                 sr.setOperatorName(rs.getString(9));
-                sr.setOperatorType(rs.getString(10));
-			       
-			       
-			        return sr;
+                sr.setOperatorType(rs.getString(10));  
+			    return sr;
 			}
 			
 		});
-		
-		
-		
+			
 	}
 
 
 
-	public Object bookBus(List<SearchResult> list, BusPassenger bp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 
@@ -93,9 +85,10 @@ public class SearchDao implements InterfaceSearchDao{
 
 			String query1 = "select GROUP9_BUS_PASSENGERS_seq.nextval from dual";
 			int query2 = getSeq(query1);
-			String query3 ="insert into GROUP9_BUS_PASSENGERS values("+query2+","+uid+",'"+bp.getDob()+"','"+bp.getGender()+"','"+bp.getAddress()+"','"+bp.getName()+"')";
 			
-			return  jdbcTemplate.update(query3);
+			String query3 ="insert into GROUP9_BUS_PASSENGERS values("+query2+","+uid+",'"+bp.getDob()+"','"+bp.getGender()+"','"+bp.getAddress()+"','"+bp.getName()+"')";
+			return jdbcTemplate.update(query3);
+			 
 	
 		
 	}
@@ -108,26 +101,32 @@ public class SearchDao implements InterfaceSearchDao{
 
 
 
-	public int book(String s, int bid, int uid) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Integer> getPId(int uid) {
+		
+		String q = "select GBP_ID from GROUP9_BUS_PASSENGERS where GBP_GBU_ID = "+uid;
+		List<Integer> pid = jdbcTemplate.queryForList(q, Integer.class);
+		return pid;
 	}
 
 
 
-/*	public int book(String s, int bid, int uid) {
+	public int insertBookings(Booking booking) {
+		String query1 = "select GROUP9_BUS_BOOKINGS_SEQ.nextval from dual";
+		int query2 = getSeq(query1);
+		String query3 = "insert into GROUP9_BUS_BOOKINGS values("+query2+","+booking.getpId()+","+booking.getBdId()+","+booking.getSeatNo()+")";
+		return jdbcTemplate.update(query3);
 		
-		String query1="select GBP_ID from GROUP9_BUS_PASSENGERS where GBP_GBU_ID= ?";
-		Object[] input = new Object[]{uid};
-		int puid = jdbcTemplate.query(query1, new ResultSetExtractor<List<BusPassenger>>())
-		String query2="select GROUP9_BUS_BOOKINGS_seq.nextval from dual";
-		int seq= getSeq(query2);
-		String query3="insert into GROUP9_BUS_BOOKINGS values("+seq+","+puid+","+bid+",'"+s+"')";
-		Object[] input1 = new Object[]{seq,puid,bid,s};
-		jdbcTemplate.update(query3);
-		return 1;
 		
-	}*/
+	}
+
+
+
+	public List<Integer> getSeatNO(int id) {
+		String q = "select GBB_SEAT_NUMBER from GROUP9_BUS_BOOKINGS where GBB_GBD_ID = "+id;
+		List<Integer> pid = jdbcTemplate.queryForList(q, Integer.class);
+		return pid;
+	}
+
 
 
 

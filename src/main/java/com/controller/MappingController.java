@@ -1,7 +1,10 @@
 package com.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model.BusSearch;
+import com.service.InterfaceSearchService;
 
 @Controller
 public class MappingController {
 
 	
+	@Autowired
+	private InterfaceSearchService searchService;
 	
 	@RequestMapping(value = "/first")
 	 public ModelAndView welcome() {
@@ -53,8 +59,10 @@ public class MappingController {
 	public ModelAndView redirect4(@PathVariable("id2") int id)
 	{
 
+		List<Integer> list = searchService.getSeatNO(id);	
 		ModelAndView mv = new ModelAndView("userbusseat");
 		mv.addObject("bid",id);
+		mv.addObject("msg",list);
 		return mv;
 		
 	}	

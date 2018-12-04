@@ -40,6 +40,11 @@ public class Booking {
 	public void setSeatNo(String seatNo) {
 		this.seatNo = seatNo;
 	}
+
+	@Override
+	public String toString() {
+		return "Booking [bId=" + bId + ", pId=" + pId + ", bdId=" + bdId + ", seatNo=" + seatNo + "]";
+	}
 	
 	
 	
