@@ -1,7 +1,7 @@
 package com.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,44 +41,43 @@ public class SearchController {
 	 * @throws Exception
 	 */
 	public ModelAndView search(@ModelAttribute BusSearch b, HttpSession session) {
-	
-		System.out.println(b.getSource()+"\n"+b.getDestination()+"\n"+b.getDoj()+"\n"+b.getDor());
-		ModelAndView mv = new ModelAndView("userbus");
+		try {
+			ModelAndView mv = new ModelAndView("userbus");
+			List<SearchResult> list = (List<SearchResult>) searchService.searchBus(b);
 		
-		List<SearchResult> list = (List<SearchResult>) searchService.searchBus(b);
-		session.setAttribute("bussearch", list);
-		mv.addObject("msg",list);
-		mv.addObject("msg1",list.get(0).getSource());
-		mv.addObject("msg2",list.get(0).getDestination());
-		return mv;
+			session.setAttribute("bussearch", list);
+			mv.addObject("msg",list);
+			mv.addObject("msg1",list.get(0).getSource());
+			mv.addObject("msg2",list.get(0).getDestination());
+			return mv;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ModelAndView("error");
+		}
+	
 		
 	}
 	
 	@PostMapping(value= "/bookseat")
-	public ModelAndView bookseat(HttpServletRequest req, HttpSession session /*@ModelAttribute BusPassenger bp*/) {
+	public ModelAndView bookseat(HttpServletRequest req, HttpSession session) {
 		
-		ModelAndView mav = new ModelAndView("addpassenger");
-		System.out.println("in bookseat controller");
-		int bId = Integer.parseInt(req.getParameter("id"));
-		System.out.println("Bus id: "+bId);
-		String[] seatNo = (String[]) req.getParameterValues("seatno");
-		session.setAttribute("seatno", seatNo);
-		int seatLength = seatNo.length;
-		System.out.println("No.of seats: "+seatLength);
-		System.out.println("Seat nos: ");
-		for(String s: seatNo) {
-			System.out.println(s);
+		try {
+			ModelAndView mav = new ModelAndView("addpassenger");
+			int bId = Integer.parseInt(req.getParameter("id"));
+			String[] seatNo = (String[]) req.getParameterValues("seatno");
+			session.setAttribute("seatno", seatNo);
+			int seatLength = seatNo.length;
+			session.setAttribute("bid", bId);
+			String email = (String) session.getAttribute("email");
+			int uId = searchService.getUId(email);
+			session.setAttribute("uid", uId);
+			session.setAttribute("l", seatLength);
+			mav.addObject("length",seatLength);
+			return mav;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return new ModelAndView("error");
 		}
-		session.setAttribute("bid", bId);
-		/*session.setAttribute("length", seatLength);*/
-		String email = (String) session.getAttribute("email");
-		System.out.println("Email id: "+email);
-		int uId = searchService.getUId(email);
-		System.out.println("User id: "+uId);
-		session.setAttribute("uid", uId);
-		session.setAttribute("l", seatLength);
-		mav.addObject("length",seatLength);
-		return mav;
 		
 	}
 	
@@ -87,21 +86,24 @@ public class SearchController {
 	@PostMapping(value= "/add")
 	public ModelAndView addPassenger(HttpServletRequest req, @ModelAttribute BusPassenger bp, HttpSession session) {
 		
-		String l1 = req.getParameter("l");
-		System.out.println("Length: "+l1);
-		int l=Integer.parseInt(l1);	 
-		do{
-			l = l-1;
-			System.out.println("l:"+l);
-		ModelAndView mav = new ModelAndView("addpassenger");
-		mav.addObject("length", l);		
-		int uid = (Integer) session.getAttribute("uid");
-		System.out.println("UID: "+uid);
-		int i = searchService.add(bp,uid);
-		mav.addObject("successfull","Passenger added succefully");
-		return mav;
-		} while(l>0);
-		
+	
+			String l1 = req.getParameter("l");
+			int l=Integer.parseInt(l1);	 
+			try {
+			do{
+				l = l-1;
+			
+			ModelAndView mav = new ModelAndView("addpassenger");
+			mav.addObject("length", l);		
+			int uid = (Integer) session.getAttribute("uid");
+			searchService.add(bp,uid);
+			mav.addObject("successfull","Passenger added succefully");
+			return mav;
+			} while(l>0);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return new ModelAndView("error");
+		}	
 		
 	}
 	
@@ -112,42 +114,51 @@ public class SearchController {
 		int length = (Integer) session.getAttribute("l");
 		int uId = (Integer) session.getAttribute("uid");
 		int bId = (Integer) session.getAttribute("bid");
-		Booking b[] = new Booking[length];
-		System.out.println("BID: "+bId);
-		List<Integer> list = searchService.getPId(uId);
-		System.out.println("PID List size: "+list.size());
-		System.out.println(list.get(0));
-	
-		for(int i=0; i< length ; i++ ) {
-			b[i] = new Booking();
-			b[i].setBdId(bId);
-			b[i].setpId(list.get(i));
-			b[i].setSeatNo(seatNo[i]);
+		try {
+			Booking b[] = new Booking[length];
+			List<Integer> list = searchService.getPId(uId);
+			session.setAttribute("pList", list);
+			for(int i=0; i< length ; i++ ) {
+				b[i] = new Booking();
+				b[i].setBdId(bId);
+				b[i].setpId(list.get(i));
+				b[i].setSeatNo(seatNo[i]);
+			}
+				
+			int j = 0;
+			for(int i=0; i<length ; i++ ) {
+				j = searchService.insertBookings(b[i]);
+			}
+			if(j>0)
+				return new ModelAndView("checkout");
+			else
+			return new ModelAndView("error");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ModelAndView("error");
 		}
-		for(int i=0;i<length;i++) {
-			System.out.println(b[i]);
-			
-		}
-			
-		int j = 0;
-		for(int i=0; i<length ; i++ ) {
+	}
+	@PostMapping("/viewbook")
+	public ModelAndView viewbook(HttpServletRequest req,HttpSession session) {
 		
-			j = searchService.insertBookings(b[i]);
+		try {
+			@SuppressWarnings("unchecked")
+			List<SearchResult> list = (List<SearchResult>) session.getAttribute("bussearch");
+			ModelAndView mav = new ModelAndView("checkout");
+			int length = (Integer) session.getAttribute("l");
+			@SuppressWarnings("unchecked")
+			List<Integer> pList = (List<Integer>) session.getAttribute("pList");
+			List<BookDetails> bookList = new ArrayList<BookDetails>(length);
+			for(int i=0; i<length ; i++ ) {
+				 bookList.addAll(searchService.viewBus(list,pList.get(i)));
+			}	
+			mav.addObject("booklist",bookList);
+			return mav;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ModelAndView("error");
 		}
-		if(j>0)
-			return new ModelAndView("done");
-		else
-			return new ModelAndView("done");
 		
 	}
-	/*@RequestMapping("/viewbook")
-	public ModelAndView book(HttpSession session, @ModelAttribute BusPassenger bp) {
-		
-		List<SearchResult> list = (List<SearchResult>) session.getAttribute("bussearch");
-		List<BookDetails> list1 = (List<BookDetails>) searchService.bookBus(list, bp);
-		return null;
-		
-	}*/
-
 
 }

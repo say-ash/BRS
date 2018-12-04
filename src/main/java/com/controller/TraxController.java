@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model.Login;
-import com.model.SearchResult;
-import com.model.User;
+
 import com.service.InterfaceTraxService;
  
 
@@ -20,6 +19,7 @@ public class TraxController {
 	
 	
 	
+	@SuppressWarnings("unused")
 	@Autowired
 		private InterfaceTraxService userservice;
 	 

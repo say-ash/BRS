@@ -1,12 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ include file = "header.jsp" %>
+      <%
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		if (session != null) {
+			if (session.getAttribute("email") == null) {			
+				response.sendRedirect("login-signup.jsp");
+			}
+		}
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+ .alert {
+    padding: 20px;
+    background-color: green;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
@@ -34,25 +61,24 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-.container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
+} 
 </style>
 </head>
 <body>
 
-
-
 <form action="add" method="Post">
-
-    
  <c:if test="${not empty successfull}">
-<div  style="font-color:green" >${successfull}</div>
+<div class="alert">
+ <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+${successfull}</div>
 </c:if> 
    <c:if test="${length > 0 }">
-    Add ${length} Passenger Details
+   
+    <div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong></strong>  Add ${length} Passenger Details
+</div>
+    
     <br/>
 	<div class="container">  
     <label for="fname">Name</label>
@@ -60,7 +86,7 @@ input[type=submit]:hover {
 
     <label for="lname">DOB</label>
     <input type="date" id="dob" name="dob" placeholder="Your dob..">
-
+<br><br>
     <label for="gender">Gender</label>
     <select id="gender" name="gender">
       <option value="Male">Male</option>
@@ -77,13 +103,13 @@ input[type=submit]:hover {
 </c:if>
  </form>
 <c:if test="${length == 0}">
-All Passengers added successfully!:)
-Confirm your ticket by clicking on below Pay Now button
 <form action="confirmseat" method="post">
+<div style="text-align:center;">
 <input type="submit" value="Pay Now">
+</div>
 </form>
 </c:if>
-
+<%@ include file = "footer.jsp" %>
 
 </body>
 </html>

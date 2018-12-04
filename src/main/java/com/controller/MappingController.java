@@ -6,12 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.model.BusSearch;
 import com.service.InterfaceSearchService;
 
 @Controller
@@ -20,6 +17,14 @@ public class MappingController {
 	
 	@Autowired
 	private InterfaceSearchService searchService;
+	
+	@RequestMapping(value = "/logout")
+	 public ModelAndView logout(HttpSession session) {
+			
+		 session.invalidate();
+	     return new ModelAndView("login-signup");
+	}
+
 	
 	@RequestMapping(value = "/first")
 	 public ModelAndView welcome() {
