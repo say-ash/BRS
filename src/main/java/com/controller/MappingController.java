@@ -18,6 +18,13 @@ public class MappingController {
 	@Autowired
 	private InterfaceSearchService searchService;
 	
+	@RequestMapping(value = "/userhome")
+	 public ModelAndView userHome() {
+
+	     return new ModelAndView("userhome");
+	}
+	
+	
 	@RequestMapping(value = "/logout")
 	 public ModelAndView logout(HttpSession session) {
 			

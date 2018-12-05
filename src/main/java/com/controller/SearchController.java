@@ -44,14 +44,12 @@ public class SearchController {
 		try {
 			ModelAndView mv = new ModelAndView("userbus");
 			List<SearchResult> list = (List<SearchResult>) searchService.searchBus(b);
-		
 			session.setAttribute("bussearch", list);
 			mv.addObject("msg",list);
 			mv.addObject("msg1",list.get(0).getSource());
 			mv.addObject("msg2",list.get(0).getDestination());
 			return mv;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ModelAndView("error");
 		}
 	
@@ -59,7 +57,7 @@ public class SearchController {
 	}
 	
 	@PostMapping(value= "/bookseat")
-	public ModelAndView bookseat(HttpServletRequest req, HttpSession session) {
+	synchronized public ModelAndView bookseat(HttpServletRequest req, HttpSession session) {
 		
 		try {
 			ModelAndView mav = new ModelAndView("addpassenger");
@@ -75,7 +73,6 @@ public class SearchController {
 			mav.addObject("length",seatLength);
 			return mav;
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ModelAndView("error");
 		}
 		
@@ -84,7 +81,7 @@ public class SearchController {
 	
 	ArrayList<Integer> list= new ArrayList<Integer>();
 	@PostMapping(value= "/add")
-	public ModelAndView addPassenger(HttpServletRequest req, @ModelAttribute BusPassenger bp, HttpSession session) {
+	synchronized public ModelAndView addPassenger(HttpServletRequest req, @ModelAttribute BusPassenger bp, HttpSession session) {
 		
 	
 			String l1 = req.getParameter("l");
@@ -101,14 +98,13 @@ public class SearchController {
 			return mav;
 			} while(l>0);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ModelAndView("error");
 		}	
 		
 	}
 	
 	@PostMapping(value= "/confirmseat")
-	public ModelAndView confirmseat(HttpServletRequest req, HttpSession session) {
+	synchronized public ModelAndView confirmseat(HttpServletRequest req, HttpSession session) {
 		
 		String[] seatNo = (String[]) session.getAttribute("seatno");
 		int length = (Integer) session.getAttribute("l");
@@ -134,12 +130,11 @@ public class SearchController {
 			else
 			return new ModelAndView("error");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ModelAndView("error");
 		}
 	}
 	@PostMapping("/viewbook")
-	public ModelAndView viewbook(HttpServletRequest req,HttpSession session) {
+	synchronized public ModelAndView viewbook(HttpServletRequest req,HttpSession session) {
 		
 		try {
 			@SuppressWarnings("unchecked")
@@ -155,7 +150,7 @@ public class SearchController {
 			mav.addObject("booklist",bookList);
 			return mav;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			return new ModelAndView("error");
 		}
 		

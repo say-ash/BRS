@@ -46,14 +46,11 @@ xmlns:mvc="http://www.springframework.org/schema/mvc"
 		</property>
 	</bean>
 	
-	<bean id="AdminDao" class="com.dao.AddBusDetailsDao">
+<bean id="AdminDao" class="com.dao.AddBusDetailsDao">
 		<property name="jdbcTemplate" ref="jdbcTemplate">
 		</property>
 	</bean>
 	
-	<bean id="traxDao" class="com.dao.TraxDao">
-	<property name="jdbcTemplate" ref="jdbcTemplate">
-	</property>
-	</bean>
+	
 	
 </beans>

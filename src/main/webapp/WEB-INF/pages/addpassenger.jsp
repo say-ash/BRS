@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ include file = "header.jsp" %>
+    <%@ page errorPage = "error.jsp" %>
       <%
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 		if (session != null) {

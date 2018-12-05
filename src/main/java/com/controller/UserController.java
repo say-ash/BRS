@@ -40,7 +40,6 @@ public class UserController {
 			else 
 				return new ModelAndView("error");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ModelAndView("error");
 		}
 	}

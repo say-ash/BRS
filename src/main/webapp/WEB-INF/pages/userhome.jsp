@@ -30,22 +30,36 @@
 		<div class="ban-top">
 			<div class="bnr-left">
 				<label class="inputLabel">From</label>
-				<input class="city" type="text" name="source" placeholder="Enter source" required/>
+				<input class="city" type="text" name="source" list="Source" placeholder="Enter source" required/>
+				
+				<datalist id="Source">
+  				<option value="Mumbai">
+  				<option value="Pune">
+  				<option value="Chennai">
+				  <option value="Banglore">
+				</datalist>
 			</div>
 			<div class="bnr-left">
 				<label class="inputLabel">To</label>
-				<input class="city" type="text" name="destination" placeholder="Enter destination"  required=>
+				<input class="city" type="text" name="destination" list="destination" placeholder="Enter destination"  required=>
 			</div>
+			
 				<div class="clearfix"></div>
+				<datalist id="destination">
+  				<option value="Mumbai">
+  				<option value="Pune">
+  				<option value="Chennai">
+				  <option value="Banglore">
+				</datalist>
 		</div>
 		<div class="ban-bottom">
 			<div class="bnr-right">
 				<label class="inputLabel">Date of Journey</label>
-				<input type="date" name="doj" required/>
+				<input type="date" name="doj"  id="dateofjourney" onchange="TDate()" required/>
 			</div>
 			<div class="bnr-right">
 				<label class="inputLabel">Date of Return<span class="opt">&nbsp;(Optional)</span></label>
-				<input type="date" name="dor" >
+				<input type="date" name="dor" id="dateofreturn"  onchange="Date()">
 			</div>
 				<div class="clearfix"></div>
 				<!---start-date-piker---->
@@ -62,22 +76,33 @@
 </div>
 </form>
 <!--- /rupes ---->
-<!---holiday---->
-<div class="container">
-	<div class="holiday">
-		<div class="col-md-3 holiday-left animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
-			<img src="images/4.jpg" class="img-responsive" alt="">
-		</div>
-		<div class="col-md-6 holiday-mid animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
-		<h3> Bus Travel Holiday Packages</h3>
-		<p>Private Guide and Driver in any language and in any departure date. For more information please contact us....</p>
-		</div>
-		<div class="col-md-3 holiday-left animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
-			<img src="images/5.jpg" class="img-responsive" alt="">
-		</div>
-			<div class="clearfix"></div>
-	</div>
-</div>
+
+<!-- <script>
+function TDate() {
+    var UserDate = document.getElementById("dateofjourney").value;
+    var ToDate = new Date();
+    if (new Date(UserDate).getTime() <= ToDate.getTime()) {
+          alert("The Date must be Bigger or Equal to today date");
+          return false;
+     }
+    return true;
+}
+</script> -->
+
+<!-- <script >
+function Date(){
+	var doj = document.getElementById("dateofjourney").value;
+	var dor = document.getElementById("dateofreturn").value;
+    var ToDate = new Date();
+    if (new Date(doj).getTime() <= new Date(dor).getTime()) {
+          alert("The Date must be ");
+          return false;
+     }
+    return true;
+	
+}
+</script> -->
+
 <!--- /routes ---->
 <%@ include file = "footer.jsp" %>
 </body>

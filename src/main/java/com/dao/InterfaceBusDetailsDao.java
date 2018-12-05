@@ -1,17 +1,19 @@
 package com.dao;
 
+import java.util.List;
+
+
 import com.model.AdminBusDetails;
+import com.model.BusStatus;
 import com.model.StopsDetails;
 
 
 public interface InterfaceBusDetailsDao {
 
-	public int AddBusDetails(AdminBusDetails br);
-	public int UpdateBus(AdminBusDetails br);
-	public int UpdateMoreDetails(AdminBusDetails br );
 	public int insertNewBus(AdminBusDetails br) ;
-	public int UpdateStops(StopsDetails sd);
-	public int UpdateNewStops(StopsDetails sd);
 	public int AddNewStops(StopsDetails sd);
+	public List<BusStatus> getDetails(int busNumber);
+	public int saveData(BusStatus bs);
+	public List<AdminBusDetails> viewBusDetails();
 	
 }

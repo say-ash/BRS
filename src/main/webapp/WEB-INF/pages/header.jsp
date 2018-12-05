@@ -28,7 +28,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="top-header">
 	<div class="container">-
 		 <ul class="tp-hd-lft wow fadeInLeft animated" data-wow-delay=".5s">
-			<li class="hm"><a href="userhome.jsp"><i class="fa fa-home"></i></a></li>
+			<li class="hm"><a href="userhome"><i class="fa fa-home"></i></a></li>
 				
 		</ul> 
 		<ul class="tp-hd-rgt wow fadeInRight animated" data-wow-delay=".5s"> 
@@ -64,8 +64,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
 					<nav class="cl-effect-1">
 						<ul class="nav navbar-nav">
-							<li><a href="about.html">About</a></li>
-								<li><a href="faq.html">FAQ</a></li>
+							<!-- <li><a href="about.html">About</a></li>
+								<li><a href="faq.html">FAQ</a></li> -->
 								<li><a href="contact.html">Contact Us</a></li>
 								<div class="clearfix"></div>
 						</ul>

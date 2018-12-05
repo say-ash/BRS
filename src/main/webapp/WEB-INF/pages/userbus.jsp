@@ -16,12 +16,6 @@
 <!DOCTYPE HTML>
 
 <html>
-<script type="text/javascript">
-		history.pushState(null,null,location.href);
-		window.onpopstate = function(){
-			history.go(1);
-		};
-	</script>
 <body>
 <!--- banner-1 ---->
 <div class="banner-1 ">

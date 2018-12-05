@@ -2,14 +2,19 @@ package com.service;
 
 
 
+import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dao.InterfaceBusDetailsDao;
 import com.dao.InterfaceUserDao;
 import com.model.AdminBusDetails;
+import com.model.BusStatus;
 import com.model.Login;
 import com.model.StopsDetails;
 import com.model.User;
+
 
 @Service
 public class UserService implements InterfaceUserService {
@@ -26,37 +31,38 @@ public class UserService implements InterfaceUserService {
 	public User validateUser(Login l) {
 		return userDao.validateUser(l);
 	}
-	
 
-	public int AddBusDetails(AdminBusDetails br) {
-		// TODO Auto-generated method stub
-		return AdminDao.AddBusDetails(br);
-	}
-	public int UpdateBus(AdminBusDetails br) {
-		return AdminDao.UpdateBus(br);
-	}
-	public int UpdateMoreDetails(AdminBusDetails br ) {
-		return AdminDao.UpdateMoreDetails(br);
-	}
 	public int insertNewBus(AdminBusDetails br) {
 		return AdminDao.insertNewBus(br);
 	
 	
 	}
-	public int UpdateStops(StopsDetails sd) {
-		return AdminDao.UpdateStops(sd);
-	}
-
-	public int UpdateNewStops(StopsDetails sd) {
-		return AdminDao.UpdateNewStops(sd);
-		
-		
-	}
+	
 
 	public int AddNewStops(StopsDetails sd) {
 		return AdminDao.AddNewStops(sd);
 		
 		
+	}
+
+
+	public List<BusStatus> getDetails(int busNumber) {
+		// TODO Auto-generated method stub
+		return AdminDao.getDetails(busNumber);
+	}
+
+	
+
+	public int saveData(BusStatus bs) {
+		// TODO Auto-generated method stub
+		return AdminDao.saveData(bs);
+	}
+
+
+
+	public List<AdminBusDetails> viewBusDetails() {
+		// TODO Auto-generated method stub
+		return AdminDao.viewBusDetails();
 	}
 
 	

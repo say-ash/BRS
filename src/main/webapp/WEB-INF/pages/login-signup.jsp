@@ -98,17 +98,18 @@
                                         <input type="text" class="form-control" name="emailId" placeholder="EmailAddress"  onblur="validateEmail(this);" required>
                                     </div>
                                 </div>
-                                    
+                                   
                                 <div class="form-group">
                                     <label for="firstname" class="col-md-3 control-label">First Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+                                        <input type="text" class="form-control" name="firstName" placeholder="First Name"  pattern="/^[a-zA-Z]+$/" onblur="lengthDefine(this,5,20);" required>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label for="lastname" class="col-md-3 control-label">Last Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+                                        <input type="text" class="form-control" name="lastName" placeholder="Last Name"  onblur="lengthDefine(this,5,20);" required>
                                     </div>
                                 </div>
 
@@ -129,7 +130,7 @@
                               <div class="form-group">
                                     <label for="contact_no" class="col-md-3 control-label">Contact Number</label>
                                     <div class="col-md-9">
-                                        <input type="tel" class="form-control" name="contactNumber" placeholder="Contact Number"  required>
+                                        <input type="tel" class="form-control" name="contactNumber" placeholder="Contact Number" pattern="{7|8|9}\d$" required>
                                     </div>
                                 </div>
 
@@ -159,6 +160,21 @@
         }
         return true;
 }
+</script>
+
+
+
+<script>
+function lengthDefine(inputtext, min, max){
+	var uInput = inputtext.value;
+	if(uInput.length >= min && uInput.length <= max ){
+	return true;
+	}else{
+	alert('aa')
+	return false;
+	}
+	}
+	
 </script>
 
 <script>
